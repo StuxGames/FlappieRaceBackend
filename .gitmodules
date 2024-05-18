@@ -1,6 +1,6 @@
 [submodule "list"]
 	path = list
-	url = https://github.com/stuxgames/gameserverlist/tree/latest
+	url = https://github.com/stuxgames/gameserverlist.git
 [submodule "manager"]
 	path = manager
-	url = https://github.com/stuxgames/gameservermanager/tree/latest
+	url = https://github.com/stuxgames/gameservermanager.git
