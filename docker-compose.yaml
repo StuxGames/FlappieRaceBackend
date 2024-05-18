@@ -1,0 +1,61 @@
+version: "3.8"
+
+services:
+  manager:
+    container_name: manager
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    tty: true
+
+  list:
+    container_name: list
+    tty: true
+    environment:
+      - IP_SOURCE=XRealIp
+
+  proxy:
+    container_name: proxy
+    build: proxy
+    env_file:
+      - ./proxy/.env
+    volumes:
+      - nginx_secrets:/etc/letsencrypt
+      - ./proxy/user_conf.d:/etc/nginx/user_conf.d:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - manager
+      - list
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    volumes:
+      - ./metrics/config:/etc/prometheus/
+      - prometheus-data:/prometheus
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - 3000:3000
+
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    command:
+      - '--path.rootfs=/host'
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - '/:/host:ro,rslave'
+
+volumes:
+  nginx_secrets: {}
+  prometheus-data: {}
+  grafana-data: {}
