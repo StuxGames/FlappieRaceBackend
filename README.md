@@ -1,5 +1,5 @@
-# Flappy Race Backend
-This repo contains all of the backend server code for the Flappy Race game which includes
+# Flappie Race Backend
+This repo contains all of the backend server code for the Flappie Race game which includes
 the main server list (under `./list`) and the server game manager (under `./manager`) as submodules.
 
 These services can all be run using docker compose for convenience:
@@ -17,7 +17,7 @@ Ensure all submodules are cloned and updates using `git pull --recurse-submodule
 Use `docker compose up` to build and run the services using the local code in the submodule repos,
 without Watchtower auto updating images.
 
-To get HTTPS to work correctly locally add flappyrace.localhost to your hosts file to point at 127.0.0.1 and add the local CA
+To get HTTPS to work correctly locally add flappierace.localhost to your hosts file to point at 127.0.0.1 and add the local CA
 from the proxy service container's files (the file to add is `/etc/local_ca/caCert.pem`).
 
 ## Production
